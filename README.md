@@ -1,57 +1,59 @@
-Certainly! Let's create a simple HTML code for an event countdown. This code will count down to a specific date and time, and it will update dynamically:
-
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Event Countdown</title>
+    <title>Music Player</title>
     <style>
-        .countdown {
-            font-family: Arial, sans-serif;
+        .container {
             text-align: center;
-            font-size: 24px;
+            margin-top: 50px;
+        }
+        audio {
+            width: 300px;
+            margin-bottom: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #2980b9;
         }
     </style>
 </head>
 <body>
 
-<div class="countdown" id="countdown"></div>
+<div class="container">
+    <audio id="audioPlayer" controls>
+        <source src="your-song.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    <button id="playPauseBtn">Play</button>
+</div>
 
 <script>
-    // Set the date we're counting down to
-    var countDownDate = new Date("May 31, 2024 00:00:00").getTime();
+    var audioPlayer = document.getElementById("audioPlayer");
+    var playPauseBtn = document.getElementById("playPauseBtn");
 
-    // Update the countdown every 1 second
-    var x = setInterval(function() {
-
-        // Get the current date and time
-        var now = new Date().getTime();
-
-        // Calculate the remaining time
-        var distance = countDownDate - now;
-
-        // Calculate days, hours, minutes, and seconds
-        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-        // Display the countdown
-        document.getElementById("countdown").innerHTML = days + "d " + hours + "h "
-            + minutes + "m " + seconds + "s ";
-
-        // If the countdown is finished, display a message
-        if (distance < 0) {
-            clearInterval(x);
-            document.getElementById("countdown").innerHTML = "The event has already happened!";
+    function togglePlay() {
+        if (audioPlayer.paused) {
+            audioPlayer.play();
+            playPauseBtn.textContent = "Pause";
+        } else {
+            audioPlayer.pause();
+            playPauseBtn.textContent = "Play";
         }
-    }, 1000);
+    }
+
+    playPauseBtn.addEventListener("click", togglePlay);
 </script>
 
 </body>
 </html>
-```
-
-This code creates a countdown timer that counts down to May 31, 2024, at midnight. You can adjust the `countDownDate` variable to the date and time of your event. The countdown will update every second until the specified date and time are reached.
